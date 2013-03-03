@@ -5,11 +5,17 @@ function generateId() {
   return Date.now() + "_" + [0,0,0,0,0,0,0,0].map(function(e) { return Math.round(Math.random() * 9); }).join("");
 }
 
-var Pillion = module.exports = function Pillion() {
+var Pillion = module.exports = function Pillion(methods) {
   stream.Duplex.call(this, {objectMode: true});
 
   this.methods = Object.create(null);
   this.m = Object.create(null);
+
+  if (methods) {
+    for (var k in methods) {
+      this.addMethod(k, methods[k]);
+    }
+  }
 };
 util.inherits(Pillion, stream.Duplex);
 
