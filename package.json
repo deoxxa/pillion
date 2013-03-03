@@ -1,0 +1,19 @@
+{
+  "name": "pillion",
+  "version": "0.0.0",
+  "description": "Make your burro a bit more comfortable with RPC!",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/deoxxa/pillion.git"
+  },
+  "keywords": [
+    "rpc",
+    "stream"
+  ],
+  "engines": {
+    "node": "~0.9.9"
+  },
+  "author": "Conrad Pankoff <deoxxa@fknsrs.biz> (http://www.fknsrs.biz/)",
+  "license": "BSD"
+}
