@@ -9,7 +9,6 @@ var Pillion = module.exports = function Pillion(methods, backend) {
   stream.Duplex.call(this, {objectMode: true});
 
   this.methods = Object.create(null);
-  this.m = Object.create(null);
 
   if (typeof methods === "object" && typeof methods.read === "function" && typeof methods.write === "function" && typeof methods.pipe === "function" && typeof methods.unpipe === "function") {
     backend = methods;
@@ -56,10 +55,6 @@ Pillion.prototype._write = function _write(input, done) {
     fn.apply(null, params);
   } else if (input.type === "error") {
     this.emit("error", input);
-  } else if (input.type === "addMethod") {
-    this.m[input.name] = this.callRemote.bind(this, input.name);
-  } else if (input.type === "removeMethod") {
-    delete this.m[input.name];
   }
 
   done();
