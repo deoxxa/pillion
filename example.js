@@ -47,7 +47,7 @@ var alice = new Pillion(aliceStream);
 // side when it feels like it. Funky. Our callback gets the reversed string and
 // ...ANOTHER CALLBACK?! WHAT THE HECK?! That's right, we're calling *another*
 // callback on bob. CRAZY.
-alice.call("reverse", "hello", function onReverse(str, kthx) {
+alice.callRemote("reverse", "hello", function onReverse(str, kthx) {
   console.log("got response from reverse, result is: " + str);
 
   kthx("bye");

@@ -45,7 +45,7 @@ Pillion.prototype._write = function _write(input, done) {
 
     var params = input.params.slice(0);
     input.functions.forEach(function(index) {
-      params[index] = this.call.bind(this, params[index].name);
+      params[index] = this.callRemote.bind(this, params[index].name);
     }.bind(this));
 
     var fn = this.methods[input.method].fn;
@@ -57,7 +57,7 @@ Pillion.prototype._write = function _write(input, done) {
   } else if (input.type === "error") {
     this.emit("error", input);
   } else if (input.type === "addMethod") {
-    this.m[input.name] = this.call.bind(this, input.name);
+    this.m[input.name] = this.callRemote.bind(this, input.name);
   } else if (input.type === "removeMethod") {
     delete this.m[input.name];
   }
@@ -94,7 +94,7 @@ Pillion.prototype._removeMethod = function _removeMethod(name) {
   }
 };
 
-Pillion.prototype.call = function call(method) {
+Pillion.prototype.callRemote = function callRemote(method) {
   var params = [].slice.call(arguments);
 
   // method, not needed
