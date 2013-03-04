@@ -4,34 +4,23 @@ var stream = require("stream");
 
 var Pillion = require("./");
 
-function createPair() {
-  var r = [
-    new stream.Duplex({objectMode: true}),
-    new stream.Duplex({objectMode: true}),
-  ];
+var s1 = new stream.Duplex({objectMode: true}),
+    s2 = new stream.Duplex({objectMode: true});
 
-  r[0]._read = function _read(n, respond) {};
-  r[0]._write = function _write(input, done) {
-    r[1].push(input);
-    done();
-  };
-
-  r[1]._read = function _read(n, respond) {};
-  r[1]._write = function _write(input, done) {
-    r[0].push(input);
-    done();
-  };
-
-  return r;
+s1._read = function _read(n, respond) {};
+s1._write = function _write(input, done) {
+  s2.push(input);
+  done();
 };
 
-var s = createPair();
+s2._read = function _read(n, respond) {};
+s2._write = function _write(input, done) {
+  s1.push(input);
+  done();
+};
 
-var p1 = new Pillion(),
-    p2 = new Pillion();
-
-p1.pipe(s[0]).pipe(p1);
-p2.pipe(s[1]).pipe(p2);
+var p1 = new Pillion(s1),
+    p2 = new Pillion(s2);
 
 p1.provide("reverse", function reverse(str, cb) {
   console.log("calling reverse with argument: " + str);
