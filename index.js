@@ -136,3 +136,7 @@ Pillion.prototype.callRemote = function callRemote(method) {
 
   return this.applyRemote(method, params);
 };
+
+Pillion.prototype.bindRemote = function bindRemote(method) {
+  return this.callRemote.bind.apply(this.callRemote, [this, method].concat([].slice.call(arguments, 1)));
+};
