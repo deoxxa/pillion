@@ -37,25 +37,25 @@ var stream = require("stream");
 
 var Pillion = require("./");
 
-var s1 = new stream.Duplex({objectMode: true}),
-    s2 = new stream.Duplex({objectMode: true});
+var stream1 = new stream.Duplex({objectMode: true}),
+    stream2 = new stream.Duplex({objectMode: true});
 
-s1._read = function _read(n, respond) {};
-s1._write = function _write(input, done) {
-  s2.push(input);
+stream1._read = function _read(n, respond) {};
+stream1._write = function _write(input, done) {
+  stream2.push(input);
   done();
 };
 
-s2._read = function _read(n, respond) {};
-s2._write = function _write(input, done) {
-  s1.push(input);
+stream2._read = function _read(n, respond) {};
+stream2._write = function _write(input, done) {
+  stream1.push(input);
   done();
 };
 
-var p1 = new Pillion(s1),
-    p2 = new Pillion(s2);
+var peer1 = new Pillion(stream1),
+    peer2 = new Pillion(stream2);
 
-p1.provide("reverse", function reverse(str, cb) {
+peer1.provide("reverse", function reverse(str, cb) {
   console.log("calling reverse with argument: " + str);
 
   cb(str.split("").reverse().join(""), function onOkay(thx) {
@@ -63,7 +63,7 @@ p1.provide("reverse", function reverse(str, cb) {
   });
 });
 
-p2.call("reverse", "hello", function onReverse(str, kthx) {
+peer2.call("reverse", "hello", function onReverse(str, kthx) {
   console.log("got response from reverse, result is: " + str);
 
   kthx("bye");
