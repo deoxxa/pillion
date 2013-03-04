@@ -25,8 +25,8 @@ bob.provide("reverse", function reverse(str, cb) {
   // Okay, let's tell alice the result of our secret word-reversing algorithm.
   // We'll call her callback with the result and another callback that we want
   // her to call when she gets the response.
-  cb(str.split("").reverse().join(""), function onOkay(thx) {
-    console.log("got acked: " + thx);
+  cb(str.split("").reverse().join(""), function onThanks(thx) {
+    console.log("got thanks: " + thx);
   });
 });
 
