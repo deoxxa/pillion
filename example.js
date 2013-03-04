@@ -3,39 +3,51 @@
 var stream = require("stream"),
     Pillion = require("./");
 
-// Set up the first peer, which will be acting kind of like a "server"
+// Set up the first peer, bob, which will be acting kind of like a "server"
 
-var stream1 = new stream.Duplex({objectMode: true});
+var bobStream = new stream.Duplex({objectMode: true});
 
-stream1._read = function _read(n, respond) {};
-stream1._write = function _write(input, done) {
-  stream2.push(input);
+bobStream._read = function _read(n, respond) {};
+bobStream._write = function _write(input, done) {
+  aliceStream.push(input);
   done();
 };
 
-var peer1 = new Pillion(stream1);
+var bob = new Pillion(bobStream);
 
-peer1.provide("reverse", function reverse(str, cb) {
+// Provide a "reverse" method that can be called by remote peers. It takes a
+// string and a... callback?! You bet your ass it takes a callback! When we call
+// that callback, it actually signals the other side (alice) to call whatever
+// function is associated with it... Wild stuff.
+bob.provide("reverse", function reverse(str, cb) {
   console.log("calling reverse with argument: " + str);
 
+  // Okay, let's tell alice the result of our secret word-reversing algorithm.
+  // We'll call her callback with the result and another callback that we want
+  // her to call when she gets the response.
   cb(str.split("").reverse().join(""), function onOkay(thx) {
     console.log("got acked: " + thx);
   });
 });
 
-// Set up the second peer, which will be taking a kind of "client" role
+// Set up the second peer, alice, which will be taking a kind of "client" role
 
-var stream2 = new stream.Duplex({objectMode: true});
+var aliceStream = new stream.Duplex({objectMode: true});
 
-stream2._read = function _read(n, respond) {};
-stream2._write = function _write(input, done) {
-  stream1.push(input);
+aliceStream._read = function _read(n, respond) {};
+aliceStream._write = function _write(input, done) {
+  bobStream.push(input);
   done();
 };
 
-var peer2 = new Pillion(stream2);
+var alice = new Pillion(aliceStream);
 
-peer2.call("reverse", "hello", function onReverse(str, kthx) {
+// Call the "reverse" method on bob. Give the arguments "hello" and... a
+// callback! That's right, the remote side is going to call this callback on our
+// side when it feels like it. Funky. Our callback gets the reversed string and
+// ...ANOTHER CALLBACK?! WHAT THE HECK?! That's right, we're calling *another*
+// callback on bob. CRAZY.
+alice.call("reverse", "hello", function onReverse(str, kthx) {
   console.log("got response from reverse, result is: " + str);
 
   kthx("bye");
