@@ -3,6 +3,9 @@
   "version": "0.0.3",
   "description": "Make your burro a bit more comfortable with RPC!",
   "main": "index.js",
+  "scripts": {
+    "test": "mocha -R spec"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/deoxxa/pillion.git"
@@ -15,5 +18,8 @@
     "node": "~0.9.9"
   },
   "author": "Conrad Pankoff <deoxxa@fknsrs.biz> (http://www.fknsrs.biz/)",
-  "license": "BSD"
+  "license": "BSD",
+  "devDependencies": {
+    "mocha": "~1.8.1"
+  }
 }
