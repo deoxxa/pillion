@@ -94,12 +94,7 @@ Pillion.prototype._removeMethod = function _removeMethod(name) {
   }
 };
 
-Pillion.prototype.callRemote = function callRemote(method) {
-  var params = [].slice.call(arguments);
-
-  // method, not needed
-  params.shift();
-
+Pillion.prototype.applyRemote = function applyRemote(method, params) {
   var id = generateId(),
       functions = [];
 
@@ -131,4 +126,13 @@ Pillion.prototype.callRemote = function callRemote(method) {
   this.push(req);
 
   return req;
+};
+
+Pillion.prototype.callRemote = function callRemote(method) {
+  var params = [].slice.call(arguments);
+
+  // method, not needed
+  params.shift();
+
+  return this.applyRemote(method, params);
 };
