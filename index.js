@@ -18,7 +18,7 @@ var Pillion = module.exports = function Pillion(methods, backend) {
 
   if (methods) {
     for (var k in methods) {
-      this.addMethod(k, methods[k]);
+      this._addMethod(k, methods[k]);
     }
   }
 
@@ -66,10 +66,10 @@ Pillion.prototype._write = function _write(input, done) {
 };
 
 Pillion.prototype.provide = function provide(name, fn) {
-  this.addMethod(name, fn);
+  this._addMethod(name, fn);
 };
 
-Pillion.prototype.addMethod = function addMethod(name, fn, temporary) {
+Pillion.prototype._addMethod = function _addMethod(name, fn, temporary) {
   this.methods[name] = {
     fn: fn,
     temporary: !!temporary,
@@ -80,7 +80,7 @@ Pillion.prototype.addMethod = function addMethod(name, fn, temporary) {
   }
 };
 
-Pillion.prototype.removeMethod = function removeMethod(name) {
+Pillion.prototype._removeMethod = function _removeMethod(name) {
   if (!this.methods[name]) {
     return;
   }
@@ -108,7 +108,7 @@ Pillion.prototype.call = function call(method) {
     if (typeof param === "function") {
       var methodName = ["x", generateId()].join("_");
 
-      this.addMethod(methodName, param, true);
+      this._addMethod(methodName, param, true);
 
       functions.push(paramIndex);
 
