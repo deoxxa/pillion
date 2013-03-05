@@ -146,6 +146,47 @@ Arguments
 * _name_ - name of the remote method.
 * _args_ - an array of arguments for the remote method.
 
+**methodAdded**
+
+`methodAdded` is an event that's fired with the name of a method that has been
+recently added to the remote peer.
+
+```javascript
+pillion.on("methodAdded", function(name) { ... });
+```
+
+```javascript
+local.on("methodAdded", function(name) {
+  console.log(name);
+});
+```
+
+Parameters
+
+* _name_ - name of the remote method.
+
+**methodRemoved**
+
+`methodRemoved` is an event that's fired with the name of a method that has been
+recently removed from the remote peer.
+
+*Note that there is currently no public API for removing methods from a Pillion
+object, so this will probably never be fired right now.*
+
+```javascript
+pillion.on("methodRemoved", function(name) { ... });
+```
+
+```javascript
+local.on("methodRemoved", function(name) {
+  console.log(name);
+});
+```
+
+Parameters
+
+* _name_ - name of the remote method.
+
 Example
 -------
 
