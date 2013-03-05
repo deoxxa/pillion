@@ -189,7 +189,7 @@ Arguments
 * _name_ - name of the remote method.
 * _args_ - an array of arguments for the remote method.
 
-**methodAdded**
+**#methodAdded**
 
 `methodAdded` is an event that's fired with the name of a method that has been
 recently added to the remote peer.
@@ -208,7 +208,7 @@ Parameters
 
 * _name_ - name of the remote method.
 
-**methodRemoved**
+**#methodRemoved**
 
 `methodRemoved` is an event that's fired with the name of a method that has been
 recently removed from the remote peer.
