@@ -28,7 +28,7 @@ Or via git:
 API
 ---
 
-*constructor*
+**constructor**
 
 Constructs a new Pillion object, optionally piping to/from a supplied Duplex
 stream and/or adding some methods.
@@ -63,7 +63,7 @@ Arguments
   must have the following functions defined: `read`, `write`, `pipe`, `unpipe`.
 * _methods_ - a hash of name -> method pairs.
 
-*provide*
+**provide**
 
 Adds a method to the pillion object, making it available for remote peers to
 call.
@@ -83,7 +83,7 @@ Arguments
 * _name_ - a string used to identify the method.
 * _function_ - a function that implements the method.
 
-*callRemote*
+**callRemote**
 
 Executes a remote method with semantics similar to `Function.call`.
 
@@ -103,7 +103,7 @@ Arguments
 * _name_ - name of the remote method.
 * _argN_ - arguments for the remote method.
 
-*applyRemote*
+**applyRemote**
 
 Executes a remote method with semantics similar to `Function.apply`.
 
@@ -123,7 +123,7 @@ Arguments
 * _name_ - name of the remote method.
 * _args_ - an array of arguments for the remote method.
 
-*bindRemote*
+**bindRemote**
 
 Returns a callable, portable reference to a remote method with semantics similar
 to `Function.bind`.
