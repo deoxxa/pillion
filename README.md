@@ -14,6 +14,49 @@ Everything is based around callbacks; you can pass a function in basically
 anywhere. There are some tricky bits around managing lifecycles right now, but
 that'll likely change in the future.
 
+Super Quickstart
+----------------
+
+If you just want to get your hands dirty, here's how I'd suggest doing it.
+There's more detailed documentation down below, if you want it. This example
+uses [burro](https://github.com/naomik/burro) and will probably only work in
+node 0.9.9 or above.
+
+```javascript
+// server.js
+
+var net = require("net"),
+    burro = require("burro"),
+    pillion = require("pillion");
+
+var server = net.createServer(function(_socket) {
+  var socket = burro.wrap(_socket),
+      rpc = new pillion(socket);
+
+  rpc.provide("greet", function(name, cb) {
+    cb("hi there, " + name);
+  });
+});
+
+server.listen(3000);
+```
+
+```javascript
+// client.js
+
+var net = require("net"),
+    burro = require("burro"),
+    pillion = require("pillion");
+
+var _socket = net.connect(3000),
+    socket = burro.wrap(_socket),
+    rpc = new pillion(socket);
+
+rpc.callRemote("greet", "friend", function(res) {
+  console.log(res); // prints "hi there, friend"
+});
+```
+
 Installation
 ------------
 
