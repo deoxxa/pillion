@@ -55,6 +55,10 @@ Pillion.prototype._write = function _write(input, done) {
     fn.apply(null, params);
   } else if (input.type === "error") {
     this.emit("error", input);
+  } else if (input.type === "methodAdded") {
+    this.emit("methodAdded", input.name);
+  } else if (input.type === "methodRemoved") {
+    this.emit("methodRemoved", input.name);
   }
 
   done();
@@ -71,7 +75,7 @@ Pillion.prototype._addMethod = function _addMethod(name, fn, temporary) {
   };
 
   if (!temporary) {
-    this.push({type: "addMethod", name: name});
+    this.push({type: "methodAdded", name: name});
   }
 };
 
@@ -85,7 +89,7 @@ Pillion.prototype._removeMethod = function _removeMethod(name) {
   delete this.methods[name];
 
   if (!temporary) {
-    this.push({type: "removeMethod", name: name});
+    this.push({type: "methodRemoved", name: name});
   }
 };
 
