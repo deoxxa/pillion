@@ -25,8 +25,129 @@ Or via git:
 
 > $ git clone git://github.com/deoxxa/pillion.git node_modules/pillion
 
-Usage
------
+API
+---
+
+*constructor*
+
+Constructs a new Pillion object, optionally piping to/from a supplied Duplex
+stream and/or adding some methods.
+
+```javascript
+new Pillion([duplexStream], [methods]);
+```
+
+```javascript
+// basic instantiation
+var p = new Pillion();
+
+// instantiation with a stream
+var p = new Pillion(something.createDuplexStream());
+
+// instantiation with method map
+var p = new Pillion({
+  hi: function(name, cb) { cb("hi there, " + name); },
+  bye: function(name, cb) { cb("see you later, " + name); },
+});
+
+// instantiation with both
+var p = new Pillion(something.createDuplexStream(), {
+  hi: function(name, cb) { cb("hi there, " + name); },
+  bye: function(name, cb) { cb("see you later, " + name); },
+});
+```
+
+Arguments
+
+* _duplexStream_ - an object implementing the streams2 "duplex stream" API. It
+  must have the following functions defined: `read`, `write`, `pipe`, `unpipe`.
+* _methods_ - a hash of name -> method pairs.
+
+*provide*
+
+Adds a method to the pillion object, making it available for remote peers to
+call.
+
+```javascript
+pillion.provide(name, function);
+```
+
+```javascript
+pillion.provide("hi", function(name, cb) {
+  cb("hi there, " + name);
+});
+```
+
+Arguments
+
+* _name_ - a string used to identify the method.
+* _function_ - a function that implements the method.
+
+*callRemote*
+
+Executes a remote method with semantics similar to `Function.call`.
+
+```javascript
+pillion.callRemote(name, [arg1, [arg2, ...]]);
+```
+
+```javascript
+pillion.callRemote("hi", "honey bear", function(response) {
+  // outputs "hi there, honey bear"
+  console.log(response);
+});
+```
+
+Arguments
+
+* _name_ - name of the remote method.
+* _argN_ - arguments for the remote method.
+
+*applyRemote*
+
+Executes a remote method with semantics similar to `Function.apply`.
+
+```javascript
+pillion.applyRemote(name, [args]);
+```
+
+```javascript
+pillion.applyRemote("hi", ["honey bear", function(response) {
+  // outputs "hi there, honey bear"
+  console.log(response);
+}]);
+```
+
+Arguments
+
+* _name_ - name of the remote method.
+* _args_ - an array of arguments for the remote method.
+
+*bindRemote*
+
+Returns a callable, portable reference to a remote method with semantics similar
+to `Function.bind`.
+
+```javascript
+pillion.bindRemote(name, [arg1, [arg2, ...]]);
+```
+
+```javascript
+var fn = pillion.bindRemote("hi");
+
+fn("honey bear", function(response) {
+  // outputs "hi there, honey bear"
+  console.log(response);
+}]);
+```
+
+Arguments
+
+* _name_ - name of the remote method.
+* _args_ - an array of arguments for the remote method.
+
+Example
+-------
 
 Also see [example.js](https://github.com/deoxxa/pillion/blob/master/example.js).
 
