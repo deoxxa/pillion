@@ -114,3 +114,32 @@ alice.callRemote("hello", function(cb) {
 });
 ```
 
+should emit methodAdded when a method is added to the remote peer.
+
+```js
+var expectedName = "testMethod";
+
+alice.on("methodAdded", function(name) {
+  assert(name === expectedName);
+
+  done();
+});
+
+bob.provide(expectedName, function() {});
+```
+
+should emit methodRemoved when a method is removed from the remote peer.
+
+```js
+var expectedName = "testMethod";
+
+alice.on("methodRemoved", function(name) {
+  assert(name === expectedName);
+
+  done();
+});
+
+bob.provide(expectedName, function() {});
+bob._removeMethod(expectedName);
+```
+
