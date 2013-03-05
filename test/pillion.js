@@ -119,4 +119,29 @@ describe("pillion", function() {
       cb();
     });
   });
+
+  it("should emit methodAdded when a method is added to the remote peer", function(done) {
+    var expectedName = "testMethod";
+
+    alice.on("methodAdded", function(name) {
+      assert(name === expectedName);
+
+      done();
+    });
+
+    bob.provide(expectedName, function() {});
+  });
+
+  it("should emit methodRemoved when a method is removed from the remote peer", function(done) {
+    var expectedName = "testMethod";
+
+    alice.on("methodRemoved", function(name) {
+      assert(name === expectedName);
+
+      done();
+    });
+
+    bob.provide(expectedName, function() {});
+    bob._removeMethod(expectedName);
+  });
 });
