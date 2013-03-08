@@ -10,7 +10,7 @@ describe("pillion", function() {
     var bobStream = new stream.Duplex({objectMode: true});
 
     bobStream._read = function _read(n, respond) {};
-    bobStream._write = function _write(input, done) {
+    bobStream._write = function _write(input, encoding, done) {
       aliceStream.push(input);
       done();
     };
@@ -20,7 +20,7 @@ describe("pillion", function() {
     var aliceStream = new stream.Duplex({objectMode: true});
 
     aliceStream._read = function _read(n, respond) {};
-    aliceStream._write = function _write(input, done) {
+    aliceStream._write = function _write(input, encoding, done) {
       bobStream.push(input);
       done();
     };

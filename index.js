@@ -30,7 +30,7 @@ util.inherits(Pillion, stream.Duplex);
 Pillion.prototype._read = function _read(n, respond) {
 };
 
-Pillion.prototype._write = function _write(input, done) {
+Pillion.prototype._write = function _write(input, encoding, done) {
   if (input.type === "call") {
     if (!this.methods[input.method]) {
       this.push({
