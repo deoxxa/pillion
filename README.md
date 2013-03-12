@@ -1,4 +1,4 @@
-Pillion ![build status](https://travis-ci.org/deoxxa/pillion.png)
+Pillion [![build status](https://travis-ci.org/deoxxa/pillion.png)](https://travis-ci.org/deoxxa/pillion)
 =======
 
 Make your burro a bit more comfortable with RPC!
