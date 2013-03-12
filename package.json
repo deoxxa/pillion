@@ -15,7 +15,7 @@
     "stream"
   ],
   "engines": {
-    "node": "~0.9.12"
+    "node": "~0.9.12 | ~0.10.0"
   },
   "author": "Conrad Pankoff <deoxxa@fknsrs.biz> (http://www.fknsrs.biz/)",
   "license": "BSD",
