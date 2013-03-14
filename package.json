@@ -1,6 +1,6 @@
 {
   "name": "pillion",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Make your burro a bit more comfortable with RPC!",
   "main": "index.js",
   "scripts": {
