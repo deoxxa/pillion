@@ -8,7 +8,7 @@ var stream = require("stream"),
 var bobStream = new stream.Duplex({objectMode: true});
 
 bobStream._read = function _read(n, respond) {};
-bobStream._write = function _write(input, done) {
+bobStream._write = function _write(input, encoding, done) {
   aliceStream.push(input);
   done();
 };
@@ -35,7 +35,7 @@ bob.provide("reverse", function reverse(str, cb) {
 var aliceStream = new stream.Duplex({objectMode: true});
 
 aliceStream._read = function _read(n, respond) {};
-aliceStream._write = function _write(input, done) {
+aliceStream._write = function _write(input, encoding, done) {
   bobStream.push(input);
   done();
 };
