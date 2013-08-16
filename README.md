@@ -19,8 +19,8 @@ Super Quickstart
 
 If you just want to get your hands dirty, here's how I'd suggest doing it.
 There's more detailed documentation down below, if you want it. This example
-uses [burro](https://github.com/naomik/burro) and will probably only work in
-node 0.9.9 or above.
+uses [burro](https://github.com/naomik/burro) and will only work in
+node-0.10.0 or above.
 
 ```javascript
 // server.js
